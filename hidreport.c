@@ -157,13 +157,11 @@ int main (int argc, char *argv[])
 				g_print ("%s\n", error->message);
 				return 1;
 			}
-			for (guint j = 0; j < 5; j++) {
-				if (!hid_get_hub_version (usb_device, &major, &minor, &error)) {
-					g_print ("Failed: %s\n", error->message);
-					return 1;
-				}
-				g_print ("Major: %x, Minor: %x\n", major, minor);
+			if (!hid_get_hub_version (usb_device, &major, &minor, &error)) {
+				g_print ("Failed: %s\n", error->message);
+				return 1;
 			}
+			g_print ("Major: %x, Minor: %x\n", major, minor);
 		}
 		usb_device = NULL;
 	}
