@@ -1,5 +1,6 @@
 #include <gusb.h>
 #include <glib.h>
+#include <umockdev.h>
 
 #define HUB_CMD_READ_DATA 0xC0
 #define HUB_EXT_READ_STATUS 0x09
@@ -115,6 +116,8 @@ open_device (GUsbDevice *usb_device, GError **error) {
 		g_prefix_error (error, "failed to open: ");
 		return FALSE;
 	}
+	if (umockdev_in_mock_environment ())
+		return TRUE;
 	if (!g_usb_device_claim_interface (
 		usb_device, 0, /* HID */
 		G_USB_DEVICE_CLAIM_INTERFACE_BIND_KERNEL_DRIVER, error)) {
