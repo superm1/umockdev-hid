@@ -162,6 +162,10 @@ int main (int argc, char *argv[])
 				return 1;
 			}
 			g_print ("Major: %x, Minor: %x\n", major, minor);
+			if (!g_usb_device_close (usb_device, &error)) {
+				g_print("failed to close: %s\n", error->message);
+				return 1;
+			}
 		}
 		usb_device = NULL;
 	}
